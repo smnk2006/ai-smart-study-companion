@@ -10,7 +10,7 @@ load_dotenv()
 app = Flask(__name__)
 
 # Correct way: get API key from environment
-openai_key = os.getenv("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")
+openai_key = os.getenv("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")
 
 # Safety check
 if not openai_key:
