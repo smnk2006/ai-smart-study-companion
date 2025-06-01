@@ -2,5 +2,6 @@ flask==2.3.3
 python-dotenv==1.0.1
 langchain==0.0.173
 langchain-openai==0.0.6
-tiktoken==0.4.0
+# Removed tiktoken fixed version, pip will install compatible one automatically
+
 
