@@ -4,22 +4,28 @@ from langchain.schema import HumanMessage
 import os
 from dotenv import load_dotenv
 
-load_dotenv()  # Loads environment variables from .env file
+# Load environment variables from .env (optional on Render, since it's set in dashboard)
+load_dotenv()
 
 app = Flask(__name__)
 
-# Get your OpenAI API key from environment variable
-openai_key = os.getenv("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")
+# Correct way: get API key from environment
+openai_key = os.getenv("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")
 
-# Initialize ChatOpenAI model (reads API key from env internally)
+# Safety check
+if not openai_key:
+    raise ValueError("❌ OPENAI_API_KEY not found in environment variables.")
+
+# Set up ChatOpenAI with key
 chat_model = ChatOpenAI(
     model="gpt-3.5-turbo",
     temperature=0.7,
+    openai_api_key=openai_key
 )
 
 @app.route("/")
 def index():
-    return render_template("index.html")  # Make sure you have this template
+    return render_template("index.html")  # Ensure templates/index.html exists
 
 @app.route("/chat", methods=["POST"])
 def chat():
@@ -35,5 +41,6 @@ def chat():
         return jsonify({"answer": f"❌ Error: {str(e)}"})
 
 if __name__ == "__main__":
-    app.run(debug=True)
-
+    # Required for Render (host=0.0.0.0 and port from environment)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=True)
