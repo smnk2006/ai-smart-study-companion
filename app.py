@@ -9,7 +9,7 @@ load_dotenv()  # Loads environment variables from .env file
 app = Flask(__name__)
 
 # Get your OpenAI API key from environment variable
-openai_key = os.getenv("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")
+openai_key = os.getenv("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")
 if not openai_key:
     raise ValueError("OPENAI_API_KEY not found in environment variables")
 
